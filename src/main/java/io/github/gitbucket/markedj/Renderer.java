@@ -135,7 +135,7 @@ public class Renderer {
             titleAttr = " title=\"" + title + "\"";
         }
 
-        return "<a href=\"" + href + "\"" + titleAttr + ">" + text + "</a>";
+        return "<a href=\"" + href + "\"" + titleAttr + " target=\"_blank\">" + text + "</a>";
     }
 
     public String image(String href, String title, String text){
