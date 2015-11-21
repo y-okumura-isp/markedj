@@ -135,7 +135,19 @@ public class Renderer {
             titleAttr = " title=\"" + title + "\"";
         }
 
-        return "<a href=\"" + href + "\"" + titleAttr + ">" + text + "</a>";
+        boolean external = false;
+        if (href.startsWith("http")) {
+            external = true;
+        }
+        
+        StringBuilder builder = new StringBuilder();
+        builder.append("<a href=\"").append(href).append("\"").append(titleAttr);
+        if (external) {
+            builder.append(" target=\"_blank\"");
+        }
+        builder.append(">").append(text).append("</a>");
+        
+        return builder.toString();
     }
 
     public String image(String href, String title, String text){
