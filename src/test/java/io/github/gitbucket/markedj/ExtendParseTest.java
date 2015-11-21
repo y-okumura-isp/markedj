@@ -19,7 +19,8 @@ public class ExtendParseTest {
 		String result = Marked.marked(md, options);
 		System.out.println(result);
 		String expect = loadResourceAsString("link_target.html");
-		//assertEquals(expect, result);
+		System.out.println(expect);
+		assertEquals(expect, result);
 	}
 
 	private String loadResourceAsString(String path) throws IOException {
