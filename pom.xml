@@ -4,7 +4,7 @@
   <groupId>org.support-project</groupId>
   <artifactId>markedj</artifactId>
   <packaging>jar</packaging>
-  <version>1.0.4</version>
+  <version>1.0.5-SNAPSHOT</version>
   <name>markedj</name>
   <url>https://github.com/gitbucket/markedj</url>
   <description>JVM port of graceful markdown processor marked.js</description>
@@ -51,7 +51,7 @@
   </dependencies>
 
   <build>
-    <!-- 
+    <!--
     <extensions>
       <extension>
         <groupId>org.apache.maven.wagon</groupId>
@@ -61,7 +61,7 @@
     </extensions>
     -->
     <plugins>
-      <!-- 
+      <!--
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-gpg-plugin</artifactId>
@@ -106,20 +106,20 @@
           </execution>
         </executions>
       </plugin>
-      <plugin> 
-        <artifactId>maven-javadoc-plugin</artifactId> 
+      <plugin>
+        <artifactId>maven-javadoc-plugin</artifactId>
         <configuration>
           <encoding>UTF-8</encoding>
           <docencoding>UTF-8</docencoding>
           <locale>en</locale>
         </configuration>
-        <executions> 
-          <execution> 
+        <executions>
+          <execution>
             <id>javadoc-jar</id>
             <phase>package</phase>
-            <goals><goal>jar</goal></goals> 
-          </execution> 
-        </executions> 
+            <goals><goal>jar</goal></goals>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
   </build>
@@ -134,5 +134,5 @@
       <url>https://support-project.org/nexus/content/repositories/snapshots/</url>
     </snapshotRepository>
   </distributionManagement>
-  
+
 </project>
