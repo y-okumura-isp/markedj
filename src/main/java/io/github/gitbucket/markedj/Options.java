@@ -16,6 +16,7 @@ public class Options {
 //    private boolean smartypants = false;
     private String headerPrefix = "";
     private boolean xhtml = false;
+    private boolean linkTargetBlank;
 
     public void setGfm(boolean gfm) {
         this.gfm = gfm;
@@ -112,4 +113,18 @@ public class Options {
     public boolean isXhtml() {
         return xhtml;
     }
+
+	/**
+	 * @return the linkTargetBlank
+	 */
+	public boolean isLinkTargetBlank() {
+		return linkTargetBlank;
+	}
+
+	/**
+	 * @param linkTargetBlank the linkTargetBlank to set
+	 */
+	public void setLinkTargetBlank(boolean linkTargetBlank) {
+		this.linkTargetBlank = linkTargetBlank;
+	}
 }

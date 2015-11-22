@@ -14,6 +14,7 @@ public class ExtendParseTest {
 	public void testLinkTarget() throws Exception {
 		Options options = new Options();
 		options.setBreaks(true);
+		options.setLinkTargetBlank(true);
 		
 		String md = loadResourceAsString("link_target.md");
 		String result = Marked.marked(md, options);

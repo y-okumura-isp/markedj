@@ -142,7 +142,7 @@ public class Renderer {
         
         StringBuilder builder = new StringBuilder();
         builder.append("<a href=\"").append(href).append("\"").append(titleAttr);
-        if (external) {
+        if (external && options.isLinkTargetBlank()) {
             builder.append(" target=\"_blank\"");
         }
         builder.append(">").append(text).append("</a>");
