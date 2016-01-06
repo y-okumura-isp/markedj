@@ -1,4 +1,4 @@
-# markedj
+# markedj [![Build Status](https://travis-ci.org/gitbucket/markedj.svg?branch=master)](https://travis-ci.org/gitbucket/markedj)
 
 JVM port of graceful markdown processor [marked.js](https://github.com/chjj/marked).
 
@@ -19,7 +19,7 @@ At first, add following dependency into your `pom.xml`:
   <dependency>
     <groupId>io.github.gitbucket</groupId>
     <artifactId>markedj</artifactId>
-    <version>1.0.4</version>
+    <version>1.0.5</version>
   </dependency>
 </dependencies>
 ```
