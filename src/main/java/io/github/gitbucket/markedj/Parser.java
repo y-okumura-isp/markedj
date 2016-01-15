@@ -16,7 +16,7 @@ public class Parser {
         this.renderer = renderer;
     }
 
-    public String parse(Stack<Token> src, Map<String, Lexer.Link> links){
+    public String parse(Stack<Token> src, Map<String, Lexer.Link> links, Map<String, String> footnotes) {
         Map<String, Rule> rules;
         if(options.isGfm()){
             if(options.isBreaks()){
@@ -28,17 +28,21 @@ public class Parser {
             rules = Grammer.INLINE_RULES;
         }
 
-        ParserContext context = new ParserContext(src, links, rules);
+        ParserContext context = new ParserContext(src, links, footnotes, rules);
         StringBuilder out = new StringBuilder();
 
         while(context.nextToken() != null){
             out.append(tok(context));
         }
 
+        if (0 < footnotes.size()) {
+            out.append(renderer.footnote(footnotes));
+        }
+
         return out.toString();
     }
 
-    protected String parseText(ParserContext context){
+    protected String parseText(ParserContext context) {
         StringBuilder body = new StringBuilder(((TextToken) context.currentToken()).getText());
         while(true){
             Token p = context.peekToken();
@@ -50,7 +54,7 @@ public class Parser {
         return context.getInlineLexer().output(body.toString());
     }
 
-    protected String tok(ParserContext context){
+    protected String tok(ParserContext context) {
         switch(context.currentToken().getType()){
             case "SpaceToken": {
                 return "";
@@ -168,14 +172,14 @@ public class Parser {
         private Token token = null;
         private InlineLexer inline;
 
-        public ParserContext(Stack<Token> src, Map<String, Lexer.Link> links, Map<String, Rule> rules){
+        public ParserContext(Stack<Token> src, Map<String, Lexer.Link> links, Map<String, String> footnotes, Map<String, Rule> rules){
             // reverse
             tokens = new Stack<>();
             while(!src.isEmpty()){
                 tokens.push(src.pop());
             }
 
-            inline = new InlineLexer(rules, links, options, renderer);
+            inline = new InlineLexer(rules, links, footnotes, options, renderer);
         }
 
         public Token currentToken(){

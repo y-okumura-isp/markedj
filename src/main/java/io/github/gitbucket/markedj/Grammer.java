@@ -25,6 +25,7 @@ public class Grammer {
     public static String BLOCK_DEF         = "^ *\\[([^\\]]+)\\]: *<?([^\\s>]+)>?(?: +[\"(]([^\\n]+)[\")])? *(?:\\n+|$)";
     public static String BLOCK_PARAGRAPH   = "^((?:[^\\n]+\\n?(?!" + BLOCK_HR + "|" + BLOCK_HEADING + "|" + BLOCK_LHEADING + "|" + BLOCK_BLOCKQUOTE + "|<" +TAG + "|" + BLOCK_DEF + "))+)\\n*";
     public static String BLOCK_GFM_FENCES  = "^ *(`{3,}|~{3,})[ \\.]*(\\S+)? *\\n([\\s\\S]*?)\\s*\\1 *(?:\\n+|$)";
+    public static String BLOCK_FOOTNOTES   = "^\\[\\^([0-9]+)\\]: *([^\n]*(?:\n+|$)(?: {1,}[^\n]*(?:\n+|$))*)";
 
     public static Map<String, Rule> BLOCK_RULES = new HashMap<>();
     public static Map<String, Rule> BLOCK_GFM_RULES = new HashMap<>();
@@ -42,6 +43,7 @@ public class Grammer {
         BLOCK_RULES.put("list", new FindFirstRule(BLOCK_LIST));
         BLOCK_RULES.put("html", new FindFirstRule("^ *(?:" + COMMENT + " *(?:\\n|\\s*$)|" + CLOSED + " *(?:\\n{2,}|\\s*$)|" + CLOSING + " *(?:\\n{2,}|\\s*$))"));
         BLOCK_RULES.put("def", new FindFirstRule(BLOCK_DEF));
+        BLOCK_RULES.put("footnote", new FindFirstRule(BLOCK_FOOTNOTES));
         BLOCK_RULES.put("table", new NoopRule());
         BLOCK_RULES.put("paragraph", new FindFirstRule(BLOCK_PARAGRAPH));
         BLOCK_RULES.put("text", new FindFirstRule("^[^\n]+"));
@@ -51,6 +53,7 @@ public class Grammer {
         BLOCK_GFM_RULES.put("fences", new FindFirstRule(BLOCK_GFM_FENCES));
         BLOCK_GFM_RULES.put("paragraph", new FindFirstRule(BLOCK_PARAGRAPH.replace("(?!", "(?!" + BLOCK_GFM_FENCES.replace("\\1", "\\2") + "|" + BLOCK_LIST.replace("\\1", "\\3") + "|")));
         BLOCK_GFM_RULES.put("heading", new FindFirstRule("^ *(#{1,6}) +([^\\n]+?) *#* *(?:\\n+|$)"));
+
 // TODO
 //  block.gfm.paragraph = replace(block.paragraph)
 //    ('(?!', '(?!'
@@ -73,6 +76,7 @@ public class Grammer {
     public static String INLINE_ESCAPE = "^\\\\([\\\\`*{}\\[\\]()#+\\-.!_>])";
     public static String INLINE_TEXT   = "^[\\s\\S]+?(?=[\\\\<!\\[_*`]| {2,}\\n|$)";
     public static String INLINE_BR     = "^ {2,}\\n(?!\\s*$)";
+    public static String INLINE_FOOTNOTE = "^\\[\\^([0-9]+)\\]";
 
     static {
         INLINE_RULES.put("escape", new FindFirstRule(INLINE_ESCAPE));
@@ -89,6 +93,7 @@ public class Grammer {
         INLINE_RULES.put("br", new FindFirstRule(INLINE_BR));
         INLINE_RULES.put("del", new NoopRule());
         INLINE_RULES.put("text", new FindFirstRule(INLINE_TEXT));
+        INLINE_RULES.put("footnote", new FindFirstRule(INLINE_FOOTNOTE));
 
         INLINE_GFM_RULES.putAll(INLINE_RULES);
         INLINE_GFM_RULES.put("escape", new FindFirstRule(INLINE_ESCAPE.replace("])", "~|])")));

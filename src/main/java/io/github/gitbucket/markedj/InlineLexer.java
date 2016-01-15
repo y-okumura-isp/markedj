@@ -15,15 +15,17 @@ public class InlineLexer {
     protected Renderer renderer;
     protected boolean inLink = false;
     protected Map<String, Lexer.Link> links;
+    protected Map<String, String> footnotes;
 
-    public InlineLexer(Map<String, Rule> rules, Map<String, Lexer.Link> links, Options options, Renderer renderer){
+    public InlineLexer(Map<String, Rule> rules, Map<String, Lexer.Link> links, Map<String, String> footnotes, Options options, Renderer renderer){
         this.rules = rules;
         this.links = links;
+        this.footnotes = footnotes;
         this.options = options;
         this.renderer = renderer;
     }
 
-    public String output(String src){
+    public String output(String src) {
 
         StringBuilder out = new StringBuilder();
         while(src.length() > 0){
@@ -97,6 +99,19 @@ public class InlineLexer {
                         out.append(escape(cap.get(0)));
                     } else {
                         out.append(cap.get(0));
+                    }
+                    continue;
+                }
+            }
+
+            // footnote
+            {
+                List<String> cap = rules.get("footnote").exec(src);
+                if (!cap.isEmpty()) {
+                    String key = cap.get(1).toLowerCase();
+                    src = src.substring(cap.get(0).length());
+                    if (footnotes.containsKey(key)) {
+                        out.append(renderer.footnoteref(key));
                     }
                     continue;
                 }
@@ -208,7 +223,7 @@ public class InlineLexer {
         return out.toString();
     }
 
-    protected String outputLink(List<String> cap, Lexer.Link link){
+    protected String outputLink(List<String> cap, Lexer.Link link) {
         String href = escape(link.getHref());
         if(cap.get(0).charAt(0) != '!'){
             return renderer.link(href, link.getTitle(), output(cap.get(1)));
