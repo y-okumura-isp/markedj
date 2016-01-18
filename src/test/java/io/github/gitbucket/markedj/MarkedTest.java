@@ -111,6 +111,13 @@ public class MarkedTest {
         }
     }
 
+    @Test
+    public void testFootnotes() throws Exception {
+        String result = Marked.marked(loadResourceAsString("footnote.md"), new Options());
+        String expect = loadResourceAsString("footnote.html");
+        assertEquals(expect, result);
+    }
+
     private String loadResourceAsString(String path) throws IOException {
         InputStream in = Thread.currentThread().getContextClassLoader().getResourceAsStream(path);
         try {

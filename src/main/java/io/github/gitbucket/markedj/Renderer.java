@@ -2,6 +2,8 @@ package io.github.gitbucket.markedj;
 
 import static io.github.gitbucket.markedj.Utils.*;
 
+import java.util.Map;
+
 public class Renderer {
 
     protected Options options;
@@ -123,6 +125,25 @@ public class Renderer {
 
     public String oembed(String href) {
         return "<a class=\"oembed\" href=\"" + href + "\">" + href + "</a>";
+    }
+
+    public String footnoteref(String key) {
+        return "<sup class=\"footnote-ref\" id=\"fnref-" + escape(key) + "\">"
+            + "<a href=\"#fn-" + escape(key) + "\">" + key + "</a></sup>";
+    }
+
+    public String footnote(Map<String, String> notes) {
+        String out = "<ol class=\"footnotes\">";
+        for (Map.Entry<String, String> noteEntry : notes.entrySet()) {
+            String key = noteEntry.getKey();
+            String text = noteEntry.getValue();
+            out += "<li id=\"fn-" + key + "\">";
+            out += text.trim();
+            out += "<a href=\"#fnref-" + key + "\">&#8617;</a>";
+            out += "</li>";
+        }
+        out += "</ol>";
+        return out;
     }
 
     public String link(String href, String title, String text){

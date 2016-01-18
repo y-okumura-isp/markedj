@@ -5,8 +5,6 @@ import io.github.gitbucket.markedj.token.*;
 
 import java.util.*;
 
-import static io.github.gitbucket.markedj.Utils.*;
-
 public class Lexer {
 
     protected Options options;
@@ -34,7 +32,7 @@ public class Lexer {
             .replace("\u2424", "\n"),
              true, false, context);
 
-        return new LexerResult(context.getTokens(), context.getLinks());
+        return new LexerResult(context.getTokens(), context.getLinks(), context.getFootnotes());
     }
 
     protected void token(String src, boolean top, boolean bq, LexerContext context){
@@ -81,6 +79,17 @@ public class Lexer {
                 if(!cap.isEmpty()){
                     src = src.substring(cap.get(0).length());
                     context.pushToken(new HeadingToken(cap.get(1).length(), cap.get(2)));
+                    continue;
+                }
+            }
+
+            // footnote
+            if (top) {
+                List<String> cap = rules.get("footnote").exec(src);
+                if (!cap.isEmpty()) {
+                    src = src.substring(cap.get(0).length());
+                    String key = cap.get(1).toLowerCase();
+                    context.pushFootnotes(key, cap.get(2));
                     continue;
                 }
             }
@@ -316,6 +325,7 @@ public class Lexer {
     public static class LexerContext {
         private Stack<Token> tokens = new Stack<>();
         private Map<String, Link> links = new HashMap<>();
+        private Map<String, String> footnotes = new HashMap<>();
 
         public void pushToken(Token token){
             this.tokens.push(token);
@@ -325,22 +335,32 @@ public class Lexer {
             this.links.put(key, link);
         }
 
+        public void pushFootnotes(String key, String text) {
+            this.footnotes.put(key, text);
+        }
+
         public Stack<Token> getTokens() {
             return tokens;
         }
 
         public Map<String, Link> getLinks() {
             return links;
+        }
+
+        public Map<String, String> getFootnotes() {
+            return footnotes;
         }
     }
 
     public static class LexerResult {
         private Stack<Token> tokens;
         private Map<String, Link> links = new HashMap<>();
+        private Map<String, String> footnotes = new HashMap<>();
 
-        public LexerResult(Stack<Token> tokens, Map<String, Link> links){
+        public LexerResult(Stack<Token> tokens, Map<String, Link> links, Map<String, String> footnotes){
             this.tokens = tokens;
             this.links = links;
+            this.footnotes = footnotes;
         }
 
         public Stack<Token> getTokens() {
@@ -349,6 +369,10 @@ public class Lexer {
 
         public Map<String, Link> getLinks() {
             return links;
+        }
+
+        public Map<String, String> getFootnotes() {
+            return footnotes;
         }
     }
 
