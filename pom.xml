@@ -1,10 +1,10 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.support-project</groupId>
   <artifactId>markedj</artifactId>
   <packaging>jar</packaging>
-  <version>1.0.6</version>
+  <version>1.0.7-SNAPSHOT</version>
   <name>markedj</name>
   <url>https://github.com/gitbucket/markedj</url>
   <description>JVM port of graceful markdown processor marked.js</description>
@@ -16,8 +16,8 @@
     </license>
   </licenses>
   <organization>
-    <name>Project Amateras</name>
-    <url>http://amateras.sourceforge.jp/</url>
+    <name>GitBucket</name>
+    <url>https://github.com/gitbucket</url>
   </organization>
   <scm>
     <connection>scm:git:https://github.com/support-project/markedj.git</connection>
@@ -40,6 +40,15 @@
       <url>http://download.java.net/maven/2</url>
     </pluginRepository>
   </pluginRepositories>
+  <developers>
+    <developer>
+      <id>takezoe</id>
+      <name>Naoki Takezoe</name>
+      <email>takezoe_at_gmail.com</email>
+      <url>http://takezoe.hatenablog.com/</url>
+      <timezone>+9</timezone>
+    </developer>
+  </developers>
 
   <dependencies>
     <dependency>
