@@ -117,6 +117,36 @@ public class MarkedTest {
         String expect = loadResourceAsString("footnote.html");
         assertEquals(expect, result);
     }
+    public void testCodeBlock() throws Exception {
+        String result = Marked.marked(
+                "    public class HelloWorld {\n" +
+                "    }", new Options());
+        assertEquals(
+                "<pre><code>public class HelloWorld {\n" +
+                "}\n" +
+                "</code></pre>\n", result);
+    }
+
+    @Test
+    public void testEmptyItemOfList() throws Exception {
+        String result = Marked.marked(loadResourceAsString("empty_item_of_list.md"), new Options());
+        assertEquals(loadResourceAsString("empty_item_of_list.html"), result);
+    }
+
+    @Test
+    public void testParagraphSeparation() throws Exception {
+        String result = Marked.marked(
+                "Message A\n" +
+                "- List A\n" +
+                "- List B", new Options());
+
+        assertEquals(
+                "<p>Message A</p>\n" +
+                "<ul>\n" +
+                "<li>List A</li>\n" +
+                "<li>List B</li>\n" +
+                "</ul>\n", result);
+    }
 
     private String loadResourceAsString(String path) throws IOException {
         InputStream in = Thread.currentThread().getContextClassLoader().getResourceAsStream(path);
