@@ -7,7 +7,7 @@
   <version>1.0.7-SNAPSHOT</version>
   <name>markedj</name>
   <url>https://github.com/gitbucket/markedj</url>
-  <description>JVM port of graceful markdown processor marked.js</description>
+  <description>Fork from gitbucket markedj because knowledge's issue. markedj is JVM port of graceful markdown processor marked.js</description>
   <inceptionYear>2015</inceptionYear>
   <licenses>
     <license>
@@ -26,7 +26,7 @@
   </scm>
   <issueManagement>
     <system>GitHub Issues</system>
-    <url>https://github.com/gitbucket/markedj/issues</url>
+    <url>https://github.com/support-project/knowledge/issues</url>
   </issueManagement>
   <repositories>
     <repository>
@@ -47,6 +47,13 @@
       <email>takezoe_at_gmail.com</email>
       <url>http://takezoe.hatenablog.com/</url>
       <timezone>+9</timezone>
+    </developer>
+    
+    <developer>
+      <name>Masaru Koda</name>
+        <email>koda.masaru3_at_gmail.com</email>
+        <organization>support-project.org</organization>
+        <organizationUrl>https://support-project.org/</organizationUrl>
     </developer>
   </developers>
 
@@ -151,12 +158,12 @@
 
   <distributionManagement>
     <repository>
-      <id>org.support.project-releases</id>
-      <url>https://support-project.org/nexus/content/repositories/releases/</url>
+      <id>sonatype-nexus-staging</id>
+      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
     </repository>
     <snapshotRepository>
-      <id>org.support.project-snapshots</id>
-      <url>https://support-project.org/nexus/content/repositories/snapshots/</url>
+      <id>sonatype-nexus-snapshot</id>
+      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
     </snapshotRepository>
   </distributionManagement>
 
