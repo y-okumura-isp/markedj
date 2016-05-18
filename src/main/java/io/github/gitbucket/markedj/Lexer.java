@@ -5,6 +5,8 @@ import io.github.gitbucket.markedj.token.*;
 
 import java.util.*;
 
+import static io.github.gitbucket.markedj.Utils.*;
+
 public class Lexer {
 
     protected Options options;
