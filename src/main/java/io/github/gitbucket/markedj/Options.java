@@ -15,9 +15,20 @@ public class Options {
     private String langPrefix = "lang-";
 //    private boolean smartypants = false;
     private String headerPrefix = "";
+    private boolean headerIdSequential;
     private boolean xhtml = false;
     private boolean linkTargetBlank;
 
+    private int sequentialId = 0;
+    public void initSequentialId() {
+        sequentialId = 0;
+    }
+    public int SequentialId() {
+        sequentialId++;
+        return sequentialId;
+    }
+    
+    
     public void setGfm(boolean gfm) {
         this.gfm = gfm;
     }
@@ -127,4 +138,20 @@ public class Options {
 	public void setLinkTargetBlank(boolean linkTargetBlank) {
 		this.linkTargetBlank = linkTargetBlank;
 	}
+
+    /**
+     * Get headerIdSequential
+     * @return the headerIdSequential
+     */
+    public boolean isHeaderIdSequential() {
+        return headerIdSequential;
+    }
+
+    /**
+     * Set headerIdSequential
+     * @param headerIdSequential the headerIdSequential to set
+     */
+    public void setHeaderIdSequential(boolean headerIdSequential) {
+        this.headerIdSequential = headerIdSequential;
+    }
 }

@@ -45,6 +45,10 @@ public class Renderer {
     }
 
     public String heading(String text, int level, String raw){
+        if (options.isHeaderIdSequential()) {
+            return "<h" + level + " id=\"" + options.getHeaderPrefix() +
+                    options.SequentialId() + "\">" + text + "</h" + level + ">\n";
+        }
         return "<h" + level + " id=\"" + options.getHeaderPrefix() +
                 raw.toLowerCase().replaceAll("[^\\w]+", "-") + "\">" + text + "</h" + level + ">\n";
     }

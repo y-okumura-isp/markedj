@@ -8,6 +8,9 @@ public class Marked {
     }
 
     public static String marked(String src, Options options) {
+        if (options.isHeaderIdSequential()) {
+            options.initSequentialId();
+        }
         return marked(src, options, new Renderer(options));
     }
 

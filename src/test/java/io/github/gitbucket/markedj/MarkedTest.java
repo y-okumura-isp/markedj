@@ -12,6 +12,13 @@ import static org.junit.Assert.*;
  * Created by takezoe on 15/09/19.
  */
 public class MarkedTest {
+    @Test
+    public void testQuote() throws Exception {
+        String md = loadResourceAsString("quote.md");
+        String result = Marked.marked(md, new Options());
+        String expect = loadResourceAsString("quote.html");
+        assertEquals(expect, result);
+    }
 
     @Test
     public void testMarked() throws Exception {
@@ -49,6 +56,12 @@ public class MarkedTest {
     public void testAutolink() throws Exception {
         String result = Marked.marked("<takezoe@gmail.com>", new Options());
         assertEquals("<p><a href=\"mailto:takezoe@gmail.com\">takezoe@gmail.com</a></p>\n", result);
+    }
+
+    @Test
+    public void testReflink() throws Exception {
+      String result = Marked.marked("[FOO], [bar][Foo], [Bar]\n\n[Foo]: http://example.com");
+      assertEquals("<p><a href=\"http://example.com\">FOO</a>, <a href=\"http://example.com\">bar</a>, [Bar]</p>\n", result);
     }
 
     @Test
@@ -146,6 +159,45 @@ public class MarkedTest {
                 "<li>List A</li>\n" +
                 "<li>List B</li>\n" +
                 "</ul>\n", result);
+    }
+
+    @Test
+    public void testNestedContentOfList() throws Exception {
+        String result = Marked.marked(loadResourceAsString("nested_content_of_list.md"), new Options());
+        assertEquals(loadResourceAsString("nested_content_of_list.html"), result);
+    }
+
+    @Test
+    public void testEmptyTableCell() throws Exception {
+        String result = Marked.marked(
+                "|ID|name|note|\n" +
+                "|-|-|-|\n" +
+                "|1|foo|This is foo|\n" +
+                "|2|bar||");
+
+
+        assertEquals(
+                "<table>\n" +
+                        "<thead>\n" +
+                        "<tr>\n" +
+                        "<th>ID</th>\n" +
+                        "<th>name</th>\n" +
+                        "<th>note</th>\n" +
+                        "</tr>\n" +
+                        "</thead>\n" +
+                        "<tbody>\n" +
+                        "<tr>\n" +
+                        "<td>1</td>\n" +
+                        "<td>foo</td>\n" +
+                        "<td>This is foo</td>\n" +
+                        "</tr>\n" +
+                        "<tr>\n" +
+                        "<td>2</td>\n" +
+                        "<td>bar</td>\n" +
+                        "<td></td>\n" +
+                        "</tr>\n" +
+                        "</tbody>\n" +
+                        "</table>\n", result);
     }
 
     private String loadResourceAsString(String path) throws IOException {

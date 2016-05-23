@@ -5,6 +5,8 @@ import io.github.gitbucket.markedj.token.*;
 
 import java.util.*;
 
+import static io.github.gitbucket.markedj.Utils.*;
+
 public class Lexer {
 
     protected Options options;
@@ -100,31 +102,43 @@ public class Lexer {
                 if(!cap.isEmpty()){
                     src = src.substring(cap.get(0).length());
 
-                    String[] header = cap.get(1).replaceAll("^ *| *\\| *$", "").split(" *\\| *");
-                    String[] align  = cap.get(2).replaceAll("^ *|\\| *$", "").split(" *\\| *");
-                    String[] cells  = cap.get(3).replaceAll("\n$", "").split("\n");
+                    String[] headers = cap.get(1).replaceAll("^ *| *\\| *$", "").split(" *\\| *");
+                    String[] aligns  = cap.get(2).replaceAll("^ *|\\| *$", "").split(" *\\| *");
+                    String[] rows    = cap.get(3).replaceAll("\n$", "").split("\n");
 
-                    List<String> header2 = Arrays.asList(header);
+                    List<String> headerList = array2list(headers);
 
-                    List<String> align2 = new ArrayList<>();
-                    for (String s : align) {
+                    List<String> alignList = new ArrayList<>();
+                    for (String s : aligns) {
                         if(s.matches("^ *-+: *$")){
-                            align2.add("right");
+                            alignList.add("right");
                         } else if(s.matches("^ *:-+: *$")){
-                            align2.add("center");
+                            alignList.add("center");
                         } else if(s.matches("^ *:-+ *$")){
-                            align2.add("left");
+                            alignList.add("left");
                         } else {
-                            align2.add(null);
+                            alignList.add(null);
                         }
                     }
 
-                    List<List<String>> cells2 = new ArrayList<>();
-                    for (String cell : cells) {
-                        cells2.add(Arrays.asList(cell.split(" *\\| *")));
+                    int maxColumns = Math.max(headers.length, aligns.length);
+
+                    List<List<String>> rowList = new ArrayList<>();
+                    for (String row : rows) {
+                        String[] columns = row.split(" *\\| *");
+                        if(maxColumns < columns.length){
+                            maxColumns = columns.length;
+                        }
+                        rowList.add(array2list(columns));
                     }
 
-                    context.pushToken(new TableToken(header2, align2, cells2));
+                    fillList(headerList, maxColumns, "");
+                    fillList(alignList, maxColumns, null);
+                    for(List<String> row: rowList){
+                        fillList(row, maxColumns, "");
+                    }
+
+                    context.pushToken(new TableToken(headerList, alignList, rowList));
                     continue;
                 }
             }
@@ -264,31 +278,43 @@ public class Lexer {
                 if(!cap.isEmpty()){
                     src = src.substring(cap.get(0).length());
 
-                    String[] header = cap.get(1).replaceAll("^ *| *\\| *$", "").split(" *\\| *");
-                    String[] align  = cap.get(2).replaceAll("^ *|\\| *$", "").split(" *\\| *");
-                    String[] cells  = cap.get(3).replaceAll("(?: *\\| *)?\\n$", "").split("\\n");
+                    String[] headers = cap.get(1).replaceAll("^ *| *\\| *$", "").split(" *\\| *");
+                    String[] aligns  = cap.get(2).replaceAll("^ *|\\| *$", "").split(" *\\| *");
+                    String[] rows    = cap.get(3).replaceAll("(?: *\\| *)?\\n$", "").split("\\n");
 
-                    List<String> header2 = Arrays.asList(header);
+                    List<String> headerList = array2list(headers);
 
-                    List<String> align2 = new ArrayList<>();
-                    for (String s : align) {
+                    List<String> alignList = new ArrayList<>();
+                    for (String s : aligns) {
                         if(s.matches("^ *-+: *$")){
-                            align2.add("right");
+                            alignList.add("right");
                         } else if(s.matches("^ *:-+: *$")){
-                            align2.add("center");
+                            alignList.add("center");
                         } else if(s.matches("^ *:-+ *$")){
-                            align2.add("left");
+                            alignList.add("left");
                         } else {
-                            align2.add(null);
+                            alignList.add(null);
                         }
                     }
 
-                    List<List<String>> cells2 = new ArrayList<>();
-                    for (String cell : cells) {
-                        cells2.add(Arrays.asList(cell.replaceAll("^ *\\| *| *\\| *$", "").split(" *\\| *")));
+                    int maxColumns = Math.max(headers.length, aligns.length);
+
+                    List<List<String>> rowList = new ArrayList<>();
+                    for (String row : rows) {
+                        String[] columns = row.replaceAll("^ *\\| *| *\\| *$", "").split(" *\\| *");
+                        if(maxColumns < columns.length){
+                            maxColumns = columns.length;
+                        }
+                        rowList.add(array2list(columns));
                     }
 
-                    context.pushToken(new TableToken(header2, align2, cells2));
+                    fillList(headerList, maxColumns, "");
+                    fillList(alignList, maxColumns, null);
+                    for(List<String> row: rowList){
+                        fillList(row, maxColumns, "");
+                    }
+
+                    context.pushToken(new TableToken(headerList, alignList, rowList));
                     continue;
                 }
             }
