@@ -61,6 +61,44 @@ public class ExtendParseTest {
         assertEquals(expect, result);
     }
 
+    
+    
+    
+    @Test
+    public void testUNC() throws Exception {
+        Options options = new Options();
+        options.setBreaks(true);
+        options.setLinkTargetBlank(true);
+        String md = "[UNCPathLink](¥¥hoge¥data \"UNCPathLink\")";
+        String result = Marked.marked(md, options);
+        String expect = "<p><a href=\"¥¥hoge¥data\" title=\"UNCPathLink\">UNCPathLink</a></p>\n";
+        assertEquals(expect, result);
+    }
+    
+    @Test
+    public void testFile() throws Exception {
+        Options options = new Options();
+        options.setBreaks(true);
+        options.setLinkTargetBlank(true);
+        String md = "[UNCPathLink](file://hoge/data \"UNCPathLink\")";
+        String result = Marked.marked(md, options);
+        String expect = "<p><a href=\"file://hoge/data\" title=\"UNCPathLink\">UNCPathLink</a></p>\n";
+        assertEquals(expect, result);
+    }
+    
+    
+    @Test
+    public void testSmb() throws Exception {
+        Options options = new Options();
+        options.setBreaks(true);
+        options.setLinkTargetBlank(true);
+        String md = "[UNCPathLink](smb://hoge/data \"UNCPathLink\")";
+        String result = Marked.marked(md, options);
+        String expect = "<p><a href=\"smb://hoge/data\" title=\"UNCPathLink\">UNCPathLink</a></p>\n";
+        assertEquals(expect, result);
+    }
+    
+    
     private String loadResourceAsString(String path) throws IOException {
         InputStream in = Thread.currentThread().getContextClassLoader().getResourceAsStream(path);
         try {
