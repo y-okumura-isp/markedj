@@ -99,6 +99,15 @@ public class ExtendParseTest {
     }
     
     
+    @Test
+    public void testAmp() {
+        String markdown = "```\n&read_data\n```";
+        String result = Marked.marked(markdown);
+        String check = "<pre><code>&amp;read_data\n</code></pre>\n";
+        org.junit.Assert.assertEquals(check, result);
+    }
+    
+    
     private String loadResourceAsString(String path) throws IOException {
         InputStream in = Thread.currentThread().getContextClassLoader().getResourceAsStream(path);
         try {
