@@ -132,7 +132,7 @@ public class Renderer {
     }
 
     public String slide(String fileNo) {
-        return "<var class=\"slideshow\" slide=\"" + fileNo + "\">" + fileNo + "</var>";
+        return "<var class=\"slideshow\" id=\"slide-" + fileNo +"\" slide=\"" + fileNo + "\">" + fileNo + "</var>";
     }
 
     public String footnoteref(String key) {
