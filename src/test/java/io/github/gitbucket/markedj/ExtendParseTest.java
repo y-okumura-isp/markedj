@@ -112,7 +112,7 @@ public class ExtendParseTest {
     public void testSlide() throws Exception {
         String md = Marked.marked("[slide 41]", new Options());
         String result = Marked.marked(md, new Options());
-        assertEquals("<p><var class=\"slideshow\" slide=\"41\">41</var></p>\n", result);
+        assertEquals("<p><var class=\"slideshow\" id=\"slide-41\" slide=\"41\">41</var></p>\n", result);
     }
     
     
