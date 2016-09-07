@@ -108,6 +108,14 @@ public class ExtendParseTest {
     }
     
     
+    @Test
+    public void testSlide() throws Exception {
+        String md = Marked.marked("[slide 41]", new Options());
+        String result = Marked.marked(md, new Options());
+        assertEquals("<p><var class=\"slideshow\" id=\"slide-41\" slide=\"41\">41</var></p>\n", result);
+    }
+    
+    
     private String loadResourceAsString(String path) throws IOException {
         InputStream in = Thread.currentThread().getContextClassLoader().getResourceAsStream(path);
         try {

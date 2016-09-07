@@ -131,6 +131,10 @@ public class Renderer {
         return "<a class=\"oembed\" href=\"" + href + "\">" + href + "</a>";
     }
 
+    public String slide(String fileNo) {
+        return "<var class=\"slideshow\" id=\"slide-" + fileNo +"\" slide=\"" + fileNo + "\">" + fileNo + "</var>";
+    }
+
     public String footnoteref(String key) {
         return "<sup class=\"footnote-ref\" id=\"fnref-" + escape(key) + "\">"
             + "<a href=\"#fn-" + escape(key) + "\">" + key + "</a></sup>";
