@@ -115,6 +115,14 @@ public class ExtendParseTest {
         assertEquals("<p><var class=\"slideshow\" id=\"slide-41\" slide=\"41\">41</var></p>\n", result);
     }
     
+    @Test
+    public void testMath() {
+        String markdown = "```math\n\\(ax^2 + bx + c = 0\\)\n```";
+        String result = Marked.marked(markdown);
+        String check = "<div class=\"lang-math\">\n\\(ax^2 + bx + c = 0\\)\n</div>\n";
+        org.junit.Assert.assertEquals(check, result);
+    }
+    
     
     private String loadResourceAsString(String path) throws IOException {
         InputStream in = Thread.currentThread().getContextClassLoader().getResourceAsStream(path);

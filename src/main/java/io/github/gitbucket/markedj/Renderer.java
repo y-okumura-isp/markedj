@@ -15,13 +15,19 @@ public class Renderer {
     public String code(String code, String lang, boolean escaped){
         if(lang != null){
             StringBuilder sb = new StringBuilder();
-            sb.append("<pre><code class=\"" + options.getLangPrefix() + escape(lang, true) + "\">");
-            if(escaped){
+            if (escape(lang, true).equals("math")) {
+                sb.append("<div class=\"" + options.getLangPrefix() + escape(lang, true) + "\">\n");
                 sb.append(code);
+                sb.append("\n</div>\n");
             } else {
-                sb.append(escape(code, true));
+                sb.append("<pre><code class=\"" + options.getLangPrefix() + escape(lang, true) + "\">");
+                if(escaped){
+                    sb.append(code);
+                } else {
+                    sb.append(escape(code, true));
+                }
+                sb.append("\n</code></pre>\n");
             }
-            sb.append("\n</code></pre>\n");
             return sb.toString();
         } else {
             StringBuilder sb = new StringBuilder();
