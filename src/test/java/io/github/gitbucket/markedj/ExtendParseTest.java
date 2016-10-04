@@ -127,7 +127,14 @@ public class ExtendParseTest {
     public void testInternallink() {
         String markdown = "#123";
         String result = Marked.marked(markdown);
-        String check = "<p><var class=\"internallink\" id=\"internallink-123\" internallink=\"123\">123</var></p>\n";
+        String check = "<p><var class=\"internallink\" id=\"internallink-123\" internallink=\"123\">#123</var></p>\n";
+        org.junit.Assert.assertEquals(check, result);
+    }
+    @Test
+    public void testInternallink2() {
+        String markdown = "#123 へリンク";
+        String result = Marked.marked(markdown);
+        String check = "<p><var class=\"internallink\" id=\"internallink-123\" internallink=\"123\">#123</var> へリンク</p>\n";
         org.junit.Assert.assertEquals(check, result);
     }
     

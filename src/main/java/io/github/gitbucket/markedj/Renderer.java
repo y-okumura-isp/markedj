@@ -143,7 +143,7 @@ public class Renderer {
 
     public Object internallink(String noTerm) {
         String no = noTerm.substring("#".length());
-        return "<var class=\"internallink\" id=\"internallink-" + no +"\" internallink=\"" + no + "\">" + no + "</var>";
+        return "<var class=\"internallink\" id=\"internallink-" + no +"\" internallink=\"" + no + "\">" + noTerm + "</var>";
     }
 
 
