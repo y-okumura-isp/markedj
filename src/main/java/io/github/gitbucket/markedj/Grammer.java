@@ -100,7 +100,9 @@ public class Grammer {
         INLINE_RULES.put("del", new NoopRule());
         INLINE_RULES.put("text", new FindFirstRule(INLINE_TEXT));
         INLINE_RULES.put("footnote", new FindFirstRule(INLINE_FOOTNOTE));
-
+        
+        INLINE_RULES.put("internallink", new FindFirstRule("^#[0-9]+$"));
+        
         INLINE_GFM_RULES.putAll(INLINE_RULES);
         INLINE_GFM_RULES.put("escape", new FindFirstRule(INLINE_ESCAPE.replace("])", "~|])")));
         INLINE_GFM_RULES.put("url", new FindFirstRule("^(https?:\\/\\/[^\\s<]+[^<.,:;\"')\\]\\s])"));

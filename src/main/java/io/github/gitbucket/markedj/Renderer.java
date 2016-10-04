@@ -141,6 +141,12 @@ public class Renderer {
         return "<var class=\"slideshow\" id=\"slide-" + fileNo +"\" slide=\"" + fileNo + "\">" + fileNo + "</var>";
     }
 
+    public Object internallink(String noTerm) {
+        String no = noTerm.substring("#".length());
+        return "<var class=\"internallink\" id=\"internallink-" + no +"\" internallink=\"" + no + "\">" + no + "</var>";
+    }
+
+
     public String footnoteref(String key) {
         return "<sup class=\"footnote-ref\" id=\"fnref-" + escape(key) + "\">"
             + "<a href=\"#fn-" + escape(key) + "\">" + key + "</a></sup>";
@@ -223,5 +229,6 @@ public class Renderer {
             return align;
         }
     }
+
 
 }

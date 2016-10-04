@@ -49,6 +49,16 @@ public class InlineLexer {
                 }
             }
 
+            // internallink
+            {
+                List<String> cap = rules.get("internallink").exec(src);
+                if(!cap.isEmpty()){
+                    src = src.substring(cap.get(0).length());
+                    out.append(renderer.internallink(cap.get(0)));
+                    continue;
+                }
+            }
+
             // slide
             {
                 List<String> cap = rules.get("slide").exec(src);
@@ -58,7 +68,7 @@ public class InlineLexer {
                     continue;
                 }
             }
-
+            
             // autolink
             {
                 List<String> cap = rules.get("autolink").exec(src);
