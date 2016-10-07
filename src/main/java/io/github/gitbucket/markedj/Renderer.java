@@ -16,11 +16,16 @@ public class Renderer {
         if(lang != null){
             StringBuilder sb = new StringBuilder();
             if (escape(lang, true).equals("math")) {
-                sb.append("<div class=\"" + options.getLangPrefix() + escape(lang, true) + "\">\n");
-                sb.append(code);
+                sb.append("<div class=\"" + options.getLangPrefix() + escape(lang, true) + " hljs\">\n");
+                String[] lines = code.split("\n");
+                for (String line : lines) {
+                    if (!line.trim().equals("")) {
+                        sb.append("$").append(line).append("$\n<br/>");
+                    }
+                }
                 sb.append("\n</div>\n");
             } else {
-                sb.append("<pre><code class=\"" + options.getLangPrefix() + escape(lang, true) + "\">");
+                sb.append("<pre><code class=\"" + options.getLangPrefix() + escape(lang, true) + " hljs\">");
                 if(escaped){
                     sb.append(code);
                 } else {
