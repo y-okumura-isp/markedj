@@ -1,10 +1,18 @@
 package io.github.gitbucket.markedj;
 
-import io.github.gitbucket.markedj.rule.Rule;
-import io.github.gitbucket.markedj.token.*;
-
 import java.util.Map;
 import java.util.Stack;
+
+import io.github.gitbucket.markedj.rule.Rule;
+import io.github.gitbucket.markedj.token.CodeToken;
+import io.github.gitbucket.markedj.token.HeadingToken;
+import io.github.gitbucket.markedj.token.HtmlToken;
+import io.github.gitbucket.markedj.token.ListStartToken;
+import io.github.gitbucket.markedj.token.MathToken;
+import io.github.gitbucket.markedj.token.ParagraphToken;
+import io.github.gitbucket.markedj.token.TableToken;
+import io.github.gitbucket.markedj.token.TextToken;
+import io.github.gitbucket.markedj.token.Token;
 
 public class Parser {
 
@@ -69,6 +77,10 @@ public class Parser {
             case "CodeToken": {
                 CodeToken t = (CodeToken) context.currentToken();
                 return renderer.code(t.getCode(), t.getLang(), t.isEscaped());
+            }
+            case "MathToken": {
+                MathToken t = (MathToken) context.currentToken();
+                return renderer.mathBlock(t.getCode());
             }
             case "TableToken": {
                 TableToken t = (TableToken) context.currentToken();

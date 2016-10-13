@@ -30,7 +30,7 @@
 </ol>
 <p>If you are using Gitbucket behind a webserver please make sure you have increased the <strong>client_max_body_size</strong> (on nginx)</p>
 <p>The default administrator account is <strong>root</strong> and password is <strong>root</strong>.</p>
-<p>or you can start GitBucket by <code>java -jar gitbucket.war</code> without servlet container. In this case, GitBucket URL is <strong><a href="http://[hostname]:8080/">http://[hostname]:8080/</a></strong>. You can specify following options.</p>
+<p>or you can start GitBucket by <code class="hljs">java -jar gitbucket.war</code> without servlet container. In this case, GitBucket URL is <strong><a href="http://[hostname]:8080/">http://[hostname]:8080/</a></strong>. You can specify following options.</p>
 <ul>
 <li>--port=[NUMBER]</li>
 <li>--prefix=[CONTEXTPATH]</li>
@@ -41,7 +41,7 @@
 <p>For Installation on Windows Server with IIS see <a href="https://github.com/takezoe/gitbucket/wiki/Installation-on-IIS-and-Helicontech-Zoo">this wiki page</a></p>
 <h3 id="mac-os-x">Mac OS X</h3>
 <h4 id="installing-via-homebrew">Installing Via Homebrew</h4>
-<pre><code>$ brew install gitbucket
+<pre><code class="hljs">$ brew install gitbucket
 ==&gt; Downloading https://github.com/takezoe/gitbucket/releases/download/1.10/gitbucket.war
 ######################################################################## 100.0%
 ==&gt; Caveats
@@ -57,11 +57,11 @@ Or, if you don&#39;t want/need launchctl, you can just run:
 /usr/local/Cellar/gitbucket/1.10: 3 files, 42M, built in 11 seconds
 </code></pre>
 <h4 id="manual-installation">Manual Installation</h4>
-<p>On OS X, copy the <a href="https://raw.github.com/takezoe/gitbucket/master/contrib/macosx/gitbucket.plist">gitbucket.plist</a> file to <code>~/Library/LaunchAgents/</code></p>
-<p>Run the following commands in <code>Terminal</code> to</p>
+<p>On OS X, copy the <a href="https://raw.github.com/takezoe/gitbucket/master/contrib/macosx/gitbucket.plist">gitbucket.plist</a> file to <code class="hljs">~/Library/LaunchAgents/</code></p>
+<p>Run the following commands in <code class="hljs">Terminal</code> to</p>
 <ul>
-<li>start gitbucket: <code>launchctl load ~/Library/LaunchAgents/gitbucket.plist</code></li>
-<li>stop gitbucket: <code>launchctl unload ~/Library/LaunchAgents/gitbucket.plist</code></li>
+<li>start gitbucket: <code class="hljs">launchctl load ~/Library/LaunchAgents/gitbucket.plist</code></li>
+<li>stop gitbucket: <code class="hljs">launchctl unload ~/Library/LaunchAgents/gitbucket.plist</code></li>
 </ul>
 <h2 id="plug-ins">Plug-ins</h2>
 <p>GitBucket has the plug-in system to extend GitBucket from outside of GitBucket. Some plug-ins are available now:</p>
@@ -170,7 +170,7 @@ Or, if you don&#39;t want/need launchctl, you can just run:
 <h3 id="2-3-1-sep-2014">2.3 - 1 Sep 2014</h3>
 <ul>
 <li>Scala based plugin system</li>
-<li>Embedded Jetty war extraction directory moved to <code>GITBUCKET_HOME/tmp</code></li>
+<li>Embedded Jetty war extraction directory moved to <code class="hljs">GITBUCKET_HOME/tmp</code></li>
 <li>Some bug fix and improvements</li>
 </ul>
 <h3 id="2-2-1-5-aug-2014">2.2.1 - 5 Aug 2014</h3>
@@ -223,13 +223,13 @@ Or, if you don&#39;t want/need launchctl, you can just run:
 <h3 id="1-11-01-mar-2014">1.11 - 01 Mar 2014</h3>
 <ul>
 <li>Base URL for redirection, notification and repository URL box is configurable</li>
-<li>Remove <code>--https</code> option because it&#39;s possible to substitute in the base url</li>
+<li>Remove <code class="hljs">--https</code> option because it&#39;s possible to substitute in the base url</li>
 <li>Headline anchor is available for Markdown contents such as Wiki page</li>
 <li>Improve H2 connectivity</li>
 <li>Label is available for pull requests not only issues</li>
 <li>Delete branch button is added</li>
 <li>Repository icons are updated</li>
-<li>Select lines of source code by URL hash like <code>#L10</code> or <code>#L10-L15</code> in repository viewer</li>
+<li>Select lines of source code by URL hash like <code class="hljs">#L10</code> or <code class="hljs">#L10-L15</code> in repository viewer</li>
 <li>Display reference to issue from others in comment list</li>
 <li>Fix some bugs</li>
 </ul>
@@ -237,7 +237,7 @@ Or, if you don&#39;t want/need launchctl, you can just run:
 <ul>
 <li>Rename repository</li>
 <li>Transfer repository owner</li>
-<li>Change default data directory to <code>HOME/.gitbucket</code> from <code>HOME/gitbucket</code> to avoid problem like #243, but if data directory already exist at HOME/gitbucket, it continues being used.</li>
+<li>Change default data directory to <code class="hljs">HOME/.gitbucket</code> from <code class="hljs">HOME/gitbucket</code> to avoid problem like #243, but if data directory already exist at HOME/gitbucket, it continues being used.</li>
 <li>Add LDAP display name attribute</li>
 <li>Response performance improvement</li>
 <li>Fix some bugs</li>
@@ -260,8 +260,8 @@ Or, if you don&#39;t want/need launchctl, you can just run:
 <h3 id="1-7-26-oct-2013">1.7 - 26 Oct 2013</h3>
 <ul>
 <li>Support working on Java6 in embedded Jetty mode</li>
-<li>Add <code>--host</code> option to bind specified host name in embedded Jetty mode</li>
-<li>Add <code>--https=true</code> option to force https scheme when using embedded Jetty mode at the back of https proxy</li>
+<li>Add <code class="hljs">--host</code> option to bind specified host name in embedded Jetty mode</li>
+<li>Add <code class="hljs">--https=true</code> option to force https scheme when using embedded Jetty mode at the back of https proxy</li>
 <li>Add full name as user property</li>
 <li>Change link color for absent Wiki pages</li>
 <li>Add ZIP download button to the repository viewer tab</li>
