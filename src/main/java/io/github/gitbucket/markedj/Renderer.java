@@ -36,7 +36,7 @@ public class Renderer {
             return sb.toString();
         } else {
             StringBuilder sb = new StringBuilder();
-            sb.append("<pre><code>");
+            sb.append("<pre><code class=\"hljs\">");
             if(escaped){
                 sb.append(code);
             } else {
@@ -123,7 +123,7 @@ public class Renderer {
     }
 
     public String codespan(String text){
-        return "<code>" + text + "</code>";
+        return "<code class=\"hljs\">" + text + "</code>";
     }
 
     public String br(){
