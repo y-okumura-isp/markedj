@@ -103,7 +103,7 @@ public class ExtendParseTest {
     public void testAmp() {
         String markdown = "```\n&read_data\n```";
         String result = Marked.marked(markdown);
-        String check = "<pre><code>&amp;read_data\n</code></pre>\n";
+        String check = "<pre><code class=\"hljs\">&amp;read_data\n</code></pre>\n";
         org.junit.Assert.assertEquals(check, result);
     }
     
@@ -119,9 +119,18 @@ public class ExtendParseTest {
     public void testMath() {
         String markdown = "```math\n\\(ax^2 + bx + c = 0\\)\n```";
         String result = Marked.marked(markdown);
-        String check = "<div class=\"lang-math hljs\">\n$\\(ax^2 + bx + c = 0\\)$\n<br/>\n</div>\n";
+        String check = "<div class=\"lang-math hljs\">\n$$\n\\(ax^2 + bx + c = 0\\)\n$$</div>\n";
         org.junit.Assert.assertEquals(check, result);
     }
+    
+    @Test
+    public void testMath2() {
+        String markdown = "$$\\boldsymbol{x} = \\left[ a, b, c \\right] ^{T} \\tag{1} \\label{aaa}$$";
+        String result = Marked.marked(markdown);
+        String check = "<p>$$\\boldsymbol{x} = \\left[ a, b, c \\right] ^{T} \\tag{1} \\label{aaa}$$</p>\n";
+        org.junit.Assert.assertEquals(check, result);
+    }
+    
     
     @Test
     public void testInternallink() {

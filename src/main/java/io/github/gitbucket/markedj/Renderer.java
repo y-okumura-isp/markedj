@@ -16,14 +16,9 @@ public class Renderer {
         if(lang != null){
             StringBuilder sb = new StringBuilder();
             if (escape(lang, true).equals("math")) {
-                sb.append("<div class=\"" + options.getLangPrefix() + escape(lang, true) + " hljs\">\n");
-                String[] lines = code.split("\n");
-                for (String line : lines) {
-                    if (!line.trim().equals("")) {
-                        sb.append("$").append(line).append("$\n<br/>");
-                    }
-                }
-                sb.append("\n</div>\n");
+                sb.append("<div class=\"" + options.getLangPrefix() + escape(lang, true) + " hljs\">\n$$\n");
+                sb.append(code); // Markdownのエスケープはしない
+                sb.append("\n$$</div>\n");
             } else {
                 sb.append("<pre><code class=\"" + options.getLangPrefix() + escape(lang, true) + " hljs\">");
                 if(escaped){
@@ -36,7 +31,7 @@ public class Renderer {
             return sb.toString();
         } else {
             StringBuilder sb = new StringBuilder();
-            sb.append("<pre><code>");
+            sb.append("<pre><code class=\"hljs\">");
             if(escaped){
                 sb.append(code);
             } else {
@@ -47,6 +42,15 @@ public class Renderer {
         }
     }
 
+    public String mathBlock(String code){
+        StringBuilder sb = new StringBuilder();
+        sb.append("<div>\n");
+        sb.append(code); // Markdownのエスケープはしない
+        sb.append("\n</div>\n");
+        return sb.toString();
+    }
+    
+    
     public String blockquote(String quote){
         return "<blockquote>\n" + quote + "</blockquote>\n";
     }
@@ -123,7 +127,7 @@ public class Renderer {
     }
 
     public String codespan(String text){
-        return "<code>" + text + "</code>";
+        return "<code class=\"hljs\">" + text + "</code>";
     }
 
     public String br(){

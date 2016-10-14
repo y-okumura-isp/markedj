@@ -26,6 +26,7 @@ public class Grammer {
     public static String BLOCK_DEF         = "^ *\\[([^\\]]+)\\]: *<?([^\\s>]+)>?(?: +[\"(]([^\\n]+)[\")])? *(?:\\n+|$)";
     public static String BLOCK_PARAGRAPH   = "^((?:[^\\n]+\\n?(?!" + removeLineStart(BLOCK_HR) + "|" + removeLineStart(BLOCK_HEADING) + "|" + removeLineStart(BLOCK_LHEADING) + "|" + removeLineStart(BLOCK_BLOCKQUOTE) + "|<" + TAG + "|" + removeLineStart(BLOCK_DEF) + "))+)\\n*";
     public static String BLOCK_GFM_FENCES  = "^ *(`{3,}|~{3,})[ \\.]*(\\S+)? *\\n([\\s\\S]*?)\\s*\\1 *(?:\\n+|$)";
+    public static String BLOCK_MATH        = "^ *(\\${2,}|~{2,})[ \\.]*(\\S+)? *\\n([\\s\\S]*?)\\s*\\1 *(?:\\n+|$)";
     public static String BLOCK_FOOTNOTES   = "^\\[\\^([0-9]+)\\]: *([^\n]*(?:\n+|$)(?: {1,}[^\n]*(?:\n+|$))*)";
 
     public static Map<String, Rule> BLOCK_RULES = new HashMap<>();
@@ -36,6 +37,7 @@ public class Grammer {
         BLOCK_RULES.put("newline", new FindFirstRule("^\n+"));
         BLOCK_RULES.put("code", new FindFirstRule("^( {4}[^\n]+\n*)+"));
         BLOCK_RULES.put("fences", new NoopRule());
+        BLOCK_RULES.put("math", new NoopRule());
         BLOCK_RULES.put("hr", new FindFirstRule(BLOCK_HR));
         BLOCK_RULES.put("heading", new FindFirstRule(BLOCK_HEADING));
         BLOCK_RULES.put("nptable", new NoopRule());
@@ -52,6 +54,7 @@ public class Grammer {
 
         BLOCK_GFM_RULES.putAll(BLOCK_RULES);
         BLOCK_GFM_RULES.put("fences", new FindFirstRule(BLOCK_GFM_FENCES));
+        BLOCK_GFM_RULES.put("math", new FindFirstRule(BLOCK_MATH));
         BLOCK_GFM_RULES.put("paragraph", new FindFirstRule(BLOCK_PARAGRAPH.replace("(?!", "(?!" + removeLineStart(BLOCK_GFM_FENCES).replace("\\1", "\\2") + "|" + removeLineStart(BLOCK_LIST).replace("\\1", "\\3") + "|")));
         BLOCK_GFM_RULES.put("heading", new FindFirstRule("^ *(#{1,6}) +([^\\n]+?) *#* *(?:\\n+|$)"));
 
