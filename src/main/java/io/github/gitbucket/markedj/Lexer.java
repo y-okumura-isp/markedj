@@ -75,6 +75,16 @@ public class Lexer {
                 }
             }
 
+            // math
+            {
+                List<String> cap = rules.get("math").exec(src);
+                if(!cap.isEmpty()){
+                    src = src.substring(cap.get(0).length());
+                    context.pushToken(new MathToken(cap.get(0)));
+                    continue;
+                }
+            }
+            
             // heading
             {
                 List<String> cap = rules.get("heading").exec(src);
@@ -173,7 +183,7 @@ public class Lexer {
                 if(!cap.isEmpty()){
                     src = src.substring(cap.get(0).length());
                     context.pushToken(new BlockquoteStartToken());
-                    token(cap.get(0).replaceAll("(?m) *> ?", ""), top, true, context);
+                    token(cap.get(0).replaceAll("(?m)^ *> ?", ""), top, true, context);
                     context.pushToken(new BlockquoteEndToken());
                     continue;
                 }

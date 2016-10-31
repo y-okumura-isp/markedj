@@ -103,7 +103,47 @@ public class ExtendParseTest {
     public void testAmp() {
         String markdown = "```\n&read_data\n```";
         String result = Marked.marked(markdown);
-        String check = "<pre><code>&amp;read_data\n</code></pre>\n";
+        String check = "<pre><code class=\"hljs\">&amp;read_data\n</code></pre>\n";
+        org.junit.Assert.assertEquals(check, result);
+    }
+    
+    
+    @Test
+    public void testSlide() throws Exception {
+        String md = Marked.marked("[slide 41]", new Options());
+        String result = Marked.marked(md, new Options());
+        assertEquals("<p><var class=\"slideshow\" id=\"slide-41\" slide=\"41\">41</var></p>\n", result);
+    }
+    
+    @Test
+    public void testMath() {
+        String markdown = "```math\n\\(ax^2 + bx + c = 0\\)\n```";
+        String result = Marked.marked(markdown);
+        String check = "<div class=\"lang-math hljs\">\n$$\n\\(ax^2 + bx + c = 0\\)\n$$</div>\n";
+        org.junit.Assert.assertEquals(check, result);
+    }
+    
+    @Test
+    public void testMath2() {
+        String markdown = "$$\\boldsymbol{x} = \\left[ a, b, c \\right] ^{T} \\tag{1} \\label{aaa}$$";
+        String result = Marked.marked(markdown);
+        String check = "<p>$$\\boldsymbol{x} = \\left[ a, b, c \\right] ^{T} \\tag{1} \\label{aaa}$$</p>\n";
+        org.junit.Assert.assertEquals(check, result);
+    }
+    
+    
+    @Test
+    public void testInternallink() {
+        String markdown = "#123";
+        String result = Marked.marked(markdown);
+        String check = "<p><var class=\"internallink\" id=\"internallink-123\" internallink=\"123\">#123</var></p>\n";
+        org.junit.Assert.assertEquals(check, result);
+    }
+    @Test
+    public void testInternallink2() {
+        String markdown = "#123 へリンク";
+        String result = Marked.marked(markdown);
+        String check = "<p><var class=\"internallink\" id=\"internallink-123\" internallink=\"123\">#123</var> へリンク</p>\n";
         org.junit.Assert.assertEquals(check, result);
     }
     

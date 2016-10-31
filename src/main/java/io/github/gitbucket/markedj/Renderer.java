@@ -15,17 +15,23 @@ public class Renderer {
     public String code(String code, String lang, boolean escaped){
         if(lang != null){
             StringBuilder sb = new StringBuilder();
-            sb.append("<pre><code class=\"" + options.getLangPrefix() + escape(lang, true) + "\">");
-            if(escaped){
-                sb.append(code);
+            if (escape(lang, true).equals("math")) {
+                sb.append("<div class=\"" + options.getLangPrefix() + escape(lang, true) + " hljs\">\n$$\n");
+                sb.append(code); // Markdownのエスケープはしない
+                sb.append("\n$$</div>\n");
             } else {
-                sb.append(escape(code, true));
+                sb.append("<pre><code class=\"" + options.getLangPrefix() + escape(lang, true) + " hljs\">");
+                if(escaped){
+                    sb.append(code);
+                } else {
+                    sb.append(escape(code, true));
+                }
+                sb.append("\n</code></pre>\n");
             }
-            sb.append("\n</code></pre>\n");
             return sb.toString();
         } else {
             StringBuilder sb = new StringBuilder();
-            sb.append("<pre><code>");
+            sb.append("<pre><code class=\"hljs\">");
             if(escaped){
                 sb.append(code);
             } else {
@@ -36,6 +42,15 @@ public class Renderer {
         }
     }
 
+    public String mathBlock(String code){
+        StringBuilder sb = new StringBuilder();
+        sb.append("<div>\n");
+        sb.append(code); // Markdownのエスケープはしない
+        sb.append("\n</div>\n");
+        return sb.toString();
+    }
+    
+    
     public String blockquote(String quote){
         return "<blockquote>\n" + quote + "</blockquote>\n";
     }
@@ -112,7 +127,7 @@ public class Renderer {
     }
 
     public String codespan(String text){
-        return "<code>" + text + "</code>";
+        return "<code class=\"hljs\">" + text + "</code>";
     }
 
     public String br(){
@@ -130,6 +145,16 @@ public class Renderer {
     public String oembed(String href) {
         return "<a class=\"oembed\" href=\"" + href + "\">" + href + "</a>";
     }
+
+    public String slide(String fileNo) {
+        return "<var class=\"slideshow\" id=\"slide-" + fileNo +"\" slide=\"" + fileNo + "\">" + fileNo + "</var>";
+    }
+
+    public Object internallink(String noTerm) {
+        String no = noTerm.substring("#".length());
+        return "<var class=\"internallink\" id=\"internallink-" + no +"\" internallink=\"" + no + "\">" + noTerm + "</var>";
+    }
+
 
     public String footnoteref(String key) {
         return "<sup class=\"footnote-ref\" id=\"fnref-" + escape(key) + "\">"
@@ -213,5 +238,6 @@ public class Renderer {
             return align;
         }
     }
+
 
 }
