@@ -147,6 +147,21 @@ public class ExtendParseTest {
         org.junit.Assert.assertEquals(check, result);
     }
     
+    @Test
+    public void testImgSize() {
+        String markdown = "![test.png 80%](test.png)";
+        String result = Marked.marked(markdown);
+        String check = "<p><img src=\"test.png\" alt=\"test.png\" width=\"80%\"></p>\n";
+        org.junit.Assert.assertEquals(check, result);
+    }
+    
+    @Test
+    public void testComment() {
+        String markdown = "<!-- page_number: true -->";
+        String result = Marked.marked(markdown);
+        String check = "<!-- page_number: true -->";
+        org.junit.Assert.assertEquals(check, result);
+    }
     
     private String loadResourceAsString(String path) throws IOException {
         InputStream in = Thread.currentThread().getContextClassLoader().getResourceAsStream(path);
