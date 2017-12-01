@@ -148,8 +148,22 @@ public class Renderer {
         return "<a class=\"oembed\" href=\"" + href + "\">" + href + "</a>";
     }
 
-    public String slide(String fileNo) {
-        return "<var class=\"slideshow\" id=\"slide-" + fileNo +"\" slide=\"" + fileNo + "\">" + fileNo + "</var>";
+    public String slide(String file) {
+        String fileNo;
+        String attribute = null;
+        if (file.contains(" ")) {
+            fileNo = file.substring(0, file.indexOf(" ")).trim();
+            attribute = file.substring(file.indexOf(" ")).trim();
+        } else {
+            fileNo = file;
+        }
+        StringBuilder builder = new StringBuilder();
+        builder.append("<var class=\"slideshow\" id=\"slide-").append(fileNo).append("\" slide=\"").append(fileNo).append("\"");
+        if (attribute != null && attribute.length() > 0) {
+            builder.append(" ").append(attribute);
+        }
+        builder.append(">").append(fileNo).append("</var>");
+        return  builder.toString();
     }
 
     public Object internallink(String noTerm) {
