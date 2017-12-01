@@ -1,8 +1,10 @@
 package io.github.gitbucket.markedj;
 
-import static io.github.gitbucket.markedj.Utils.*;
+import static io.github.gitbucket.markedj.Utils.escape;
 
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Renderer {
 
@@ -205,12 +207,36 @@ public class Renderer {
         if(title != null){
             titleAttr = " title=\"" + title + "\"";
         }
-
-        if(options.isXhtml()){
-            return "<img src=\"" + href + "\" alt=\"" + text + "\"" + titleAttr + "/>";
-        } else {
-            return "<img src=\"" + href + "\" alt=\"" + text + "\"" + titleAttr + ">";
+        
+        String width = null;
+        if (text != null) {
+            String regex = "(.*%)";
+            Pattern p = Pattern.compile(regex);
+            String[] strs = text.split("\\s");
+            for (String string : strs) {
+                Matcher m = p.matcher(string);
+                if (m.find()){
+                    width = m.group(0).trim();
+                    break;
+                }
+            }
+            if (width != null) {
+                text = text.replace(width, "").trim();
+            }
         }
+        
+        StringBuilder builder = new StringBuilder();
+        builder.append("<img src=\"" + href + "\" alt=\"" + text + "\"" + titleAttr);
+        if (width != null) {
+            builder.append(" width=\"" + width + "\"");
+        }
+        
+        if(options.isXhtml()){
+            builder.append("/>");
+        } else {
+            builder.append(">");
+        }
+        return builder.toString();
     }
 
     public String nolink(String text){
