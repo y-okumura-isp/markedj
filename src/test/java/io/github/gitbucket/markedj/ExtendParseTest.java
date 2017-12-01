@@ -107,12 +107,17 @@ public class ExtendParseTest {
         org.junit.Assert.assertEquals(check, result);
     }
     
-    
     @Test
     public void testSlide() throws Exception {
         String md = Marked.marked("[slide 41]", new Options());
         String result = Marked.marked(md, new Options());
         assertEquals("<p><var class=\"slideshow\" id=\"slide-41\" slide=\"41\">41</var></p>\n", result);
+    }
+    @Test
+    public void testSlide2() throws Exception {
+        String md = Marked.marked("[slide 2 transition=\"flipInY\"]", new Options());
+        String result = Marked.marked(md, new Options());
+        assertEquals("<p><var class=\"slideshow\" id=\"slide-2\" slide=\"2\" transition=\"flipInY\">2</var></p>\n", result);
     }
     
     @Test
